@@ -14,6 +14,7 @@ public class Pane extends JPanel {
 		viewport.setContentType("text/html");
 		
 		add(new JScrollPane(viewport));
+		setLayout(new GridLayout()); // YESSAIIII!!!
 	}
 	
 	public Pane(String url) {
