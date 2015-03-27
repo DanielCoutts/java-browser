@@ -10,7 +10,7 @@ public class Browser extends JFrame {
 		super();
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new BorderLayout());
-		
+
 		toolbar = new Toolbar(pane);
 		pane = new Pane(toolbar, Bookmarks.getHomepage());
 		

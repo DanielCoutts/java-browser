@@ -42,22 +42,22 @@ public class Toolbar extends JPanel {
 	}
 
 	private void createListeners() {
-//		home.addActionListener(new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				matchingPane.setPage(Bookmarks.getHomepage());
-//			}
-//		});
-//		
-//		addressBar.addKeyListener(new KeyListener() {
-//			
-//			public void keyTyped(KeyEvent e) {
-//				if (true) {
-//					JOptionPane.showMessageDialog(addressBar, "implement me pls.");
-//				}
-//			}
-//			public void keyReleased(KeyEvent e) { }
-//			public void keyPressed(KeyEvent e) { }
-//		});
+		home.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				matchingPane.setPage(Bookmarks.getHomepage());
+			}
+		});
+		
+		addressBar.addKeyListener(new KeyListener() {
+			
+			public void keyTyped(KeyEvent e) {}
+			public void keyReleased(KeyEvent e) { }
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == 10) {
+					matchingPane.setPage(addressBar.getText());
+				}
+			}
+		});
 	}
 	
 	
