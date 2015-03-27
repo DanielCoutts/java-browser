@@ -1,21 +1,29 @@
 import javax.swing.*;
 import java.awt.*;
 
-
-public class Browser {
+public class Browser extends JFrame {
 	
+	private Toolbar toolbar;
+	private Pane pane;
+	
+	public Browser(Dimension size) {
+		super();
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(new BorderLayout());
+		
+		toolbar = new Toolbar(pane);
+		pane = new Pane(toolbar, Bookmarks.getHomepage());
+		
+		add(pane, BorderLayout.CENTER);
+		add(toolbar, BorderLayout.NORTH);
+		
+		setSize(size);
+		setMinimumSize(new Dimension(800,400));
+		setVisible(true);
+	}
+	
+	// MAIN METHOD FOR TESTING
 	public static void main(String[] args) {
-		JFrame window = new JFrame();
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		window.setLayout(new BorderLayout());
-
-		Pane pane = new Pane("http://www2.warnerbros.com/spacejam/movie/jam.htm");
-		window.add(pane, BorderLayout.CENTER);
-		
-		window.add(new Toolbar(), BorderLayout.NORTH);
-		
-		window.setMinimumSize(new Dimension(700,400));
-		window.setSize(new Dimension(1000, 1000));
-		window.setVisible(true);
+		Browser window = new Browser(new Dimension(1000, 1000));
 	}
 }

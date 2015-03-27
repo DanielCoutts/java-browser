@@ -1,19 +1,64 @@
 import java.awt.*;
+import java.awt.event.*;
+import java.util.List;
+import java.util.LinkedList;
 
 import javax.swing.*;
 
 
 public class Toolbar extends JPanel {
 	
+	private Pane matchingPane;
+	
+	private List<String> session = new LinkedList<String>();
+	
+	private JTextField addressBar = new JTextField(30);
+	JButton back = new JButton("Back");
+	JButton forward = new JButton("Forward");
+	JButton home = new JButton("Home");
+	JButton reload = new JButton("Reload");
+	
 	// constructor adds button and address bar
-	public Toolbar() {
+	public Toolbar(Pane matchingPane) {
 		super();
+		this.matchingPane = matchingPane;
 		setLayout(new FlowLayout());
-		add(new JButton("Back"));
-		add(new JButton("Forward"));
-		add(new JButton("Home"));
-		add(new JTextField(27));
+		add(back);
+		add(forward);
+		add(home);
+		add(reload);
+		add(addressBar);
 		//hist&favs now
 		
+		createListeners();
 	}
+
+	public JTextField getAddressBar() {
+		return addressBar;
+	}
+
+	public void updateAddressBar(String text) {
+		addressBar.setText(text);
+	}
+
+	private void createListeners() {
+//		home.addActionListener(new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				matchingPane.setPage(Bookmarks.getHomepage());
+//			}
+//		});
+//		
+//		addressBar.addKeyListener(new KeyListener() {
+//			
+//			public void keyTyped(KeyEvent e) {
+//				if (true) {
+//					JOptionPane.showMessageDialog(addressBar, "implement me pls.");
+//				}
+//			}
+//			public void keyReleased(KeyEvent e) { }
+//			public void keyPressed(KeyEvent e) { }
+//		});
+	}
+	
+	
 }
