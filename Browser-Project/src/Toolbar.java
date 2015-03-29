@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class Toolbar extends JPanel {
 	
-	private Pane matchingPane;
+	private Browser browser;
 	
 	private List<String> session = new LinkedList<String>();
 	
@@ -19,9 +19,9 @@ public class Toolbar extends JPanel {
 	JButton reload = new JButton("Reload");
 	
 	// constructor adds button and address bar
-	public Toolbar(Pane matchingPane) {
+	public Toolbar(Browser browser) {
 		super();
-		this.matchingPane = matchingPane;
+		this.browser = browser;
 		setLayout(new FlowLayout());
 		add(back);
 		add(forward);
@@ -44,7 +44,7 @@ public class Toolbar extends JPanel {
 	private void createListeners() {
 		home.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				matchingPane.setPage(Bookmarks.getHomepage());
+				browser.getPane().setPage(Bookmarks.getHomepage());
 			}
 		});
 		
@@ -54,7 +54,7 @@ public class Toolbar extends JPanel {
 			public void keyReleased(KeyEvent e) { }
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == 10) {
-					matchingPane.setPage(addressBar.getText());
+					browser.getPane().setPage(addressBar.getText());
 				}
 			}
 		});

@@ -7,32 +7,60 @@ import javax.swing.event.HyperlinkListener;
 
 public class Pane extends JPanel {
 	
+	/**
+	 * Declares a JEditorPane to display webpages.
+	 */
 	private JEditorPane viewport;
-	private Toolbar matchingToolbar;
 	
-	public Pane(Toolbar matchingToolbar) {
+	/**
+	 * Reference to the Pane object's containing Browser object.
+	 */
+	private Browser browser;
+	
+	/**
+	 * Create an empty content Pane.
+	 * 
+	 * @param browser	The Browser object associated with this Pane object.
+	 */
+	public Pane(Browser browser) {
+		
+		// Call the JPanel constructor.
 		super();
-		this.matchingToolbar = matchingToolbar;
+		
+		this.browser = browser;
+		
+		// Set up the viewport to display HTML.
 		viewport = new JEditorPane();
 		viewport.setEditable(false);
 		viewport.setContentType("text/html");
 		
+		// Add the viewport to a JScrollPane, then add to this Pane.
 		add(new JScrollPane(viewport));
+		
+		// Set an appropriate Layout for the content Pane.
 		setLayout(new GridLayout());
+		
+		// Sets up all listeners for the Pane object.
 		createListeners();
 	}
 	
-	public Pane(Toolbar matchingToolbar, String url) {
-		this(matchingToolbar);
+	/**
+	 * Create a content Pane containing a specified URL.
+	 * 
+	 * @param browser	The Browser object associated with this Pane object.
+	 * @param url		The URL of the webpage to be displayed
+	 */
+	public Pane(Browser browser, String url) {
+		this(browser);
 		setPage(url);
 	}
 	
 	public void setPage(String url) {
 		try {
 			viewport.setPage(url);
-			matchingToolbar.updateAddressBar(url);
+			browser.getToolbar().updateAddressBar(url);
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(matchingToolbar, "That is not a valid web address.");
+			JOptionPane.showMessageDialog(browser, "That is not a valid web address.");
 		}
 		
 	}
