@@ -1,8 +1,13 @@
+/**
+ * @author  Daniel Coutts
+ */
+
 import java.awt.*;
 import java.io.IOException;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
+import javax.swing.text.Document;
 
 public class Pane extends JPanel {
 
@@ -49,7 +54,7 @@ public class Pane extends JPanel {
      * @param browser The Browser object associated with this Pane object.
      * @param url     The URL of the web page to be displayed.
      */
-    public Pane(Browser browser, String url) {
+    public Pane(Browser browser, String url) throws IOException {
         this(browser);
         setPage(url);
     }
@@ -59,16 +64,22 @@ public class Pane extends JPanel {
      *
      * @param url   The url of the web page to be displayed.
      */
-    public void setPage(String url) {
+    public void setPage(String url) throws IOException {
+        // Sets the page
+        viewport.setPage(url);
+        browser.getToolbar().updateAddressBar(url);
+    }
+
+    public void reload() {
         try {
-            // Sets the page
-            viewport.setPage(url);
-            browser.getToolbar().updateAddressBar(url);
-        } catch (IOException e) {
+            String page = viewport.getPage().toString();
+            viewport.getDocument().putProperty(Document.StreamDescriptionProperty, null);
+            setPage(page);
+        }
+        catch (IOException ioe) {
             // If the url is not valid, the user is notified with a popup.
             JOptionPane.showMessageDialog(browser, "That is not a valid web address.");
         }
-
     }
 
     /**
@@ -79,7 +90,14 @@ public class Pane extends JPanel {
             public void hyperlinkUpdate(HyperlinkEvent event) {
                 // If a hyperlink is clicked, navigate to that page.
                 if (event.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
-                    setPage(event.getURL().toString());
+                    try {
+                        setPage(event.getURL().toString());
+                        browser.getSession().navigate(event.getURL().toString());
+                    }
+                    catch (IOException ioe) {
+                        // If the url is not valid, the user is notified with a popup.
+                        JOptionPane.showMessageDialog(browser, "That is not a valid web address.");
+                    }
                 }
             }
         });
