@@ -2,14 +2,9 @@
  * @author Daniel Coutts
  */
 
-import com.sun.codemodel.internal.JOp;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-import java.util.List;
-import java.util.LinkedList;
-import java.util.ListIterator;
 import javax.swing.*;
 
 
@@ -63,6 +58,8 @@ public class Toolbar extends JPanel {
      * Private method used to add listeners. It is called in the constructor.
      */
     private void addListeners() {
+
+        // Home button action listener
         home.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -76,13 +73,12 @@ public class Toolbar extends JPanel {
             }
         });
 
+        // Address bar action listener
         addressBar.addKeyListener(new KeyListener() {
 
-            public void keyTyped(KeyEvent e) {
-            }
+            public void keyTyped(KeyEvent e) { }
 
-            public void keyReleased(KeyEvent e) {
-            }
+            public void keyReleased(KeyEvent e) { }
 
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == 10) {
@@ -101,6 +97,7 @@ public class Toolbar extends JPanel {
             }
         });
 
+        // Back button action listener
         back.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -114,6 +111,7 @@ public class Toolbar extends JPanel {
             }
         });
 
+        // Forward button action listener
         forward.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
@@ -128,6 +126,7 @@ public class Toolbar extends JPanel {
             }
         });
 
+        // Reload button action listener
         reload.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 browser.getPane().reload();

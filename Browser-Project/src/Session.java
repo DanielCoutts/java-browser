@@ -1,9 +1,10 @@
-import java.util.Stack;
-
 /**
  * @author Daniel Coutts
  * 04/04/2015.
  */
+
+import java.util.Stack;
+
 public class Session {
 
     /**
@@ -24,16 +25,13 @@ public class Session {
     /**
      * The associated Browser object.
      */
-//    private Browser browser;
 
     /**
      * Creates a Session object to track the pages or the current Pane
      *
-//     * @param browser   The associated browser class.
      * @param current   The current page at initialisation (should be the homepage).
      */
     public Session(/*Browser browser, */String current) {
-//        this.browser = browser;
         this.current = current;
         previous = new Stack<String>();
         next = new Stack<String>();

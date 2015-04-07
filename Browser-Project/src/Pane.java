@@ -70,9 +70,15 @@ public class Pane extends JPanel {
         browser.getToolbar().updateAddressBar(url);
     }
 
+    /**
+     * Reloads the web page in the pane.
+     */
     public void reload() {
         try {
+            // Store the current page in a variable.
             String page = viewport.getPage().toString();
+
+            // Refresh the page.
             viewport.getDocument().putProperty(Document.StreamDescriptionProperty, null);
             setPage(page);
         }

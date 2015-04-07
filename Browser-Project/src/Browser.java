@@ -38,7 +38,7 @@ public class Browser extends JFrame {
             // This allows the toolbar to access the display pane and vice versa.
             toolbar = new Toolbar(this);
             pane = new Pane(this, Bookmarks.getHomepage());
-            session = new Session(/*this, */Bookmarks.getHomepage());
+            session = new Session(Bookmarks.getHomepage());
         }
         catch (IOException ioe) {
             // If the url is not valid, the user is notified with a popup.
