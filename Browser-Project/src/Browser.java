@@ -37,7 +37,8 @@ public class Browser extends JFrame {
             // The browser object is passes to the Toolbar and Pane objects.
             // This allows the toolbar to access the display pane and vice versa.
             toolbar = new Toolbar(this);
-            pane = new Pane(this, Bookmarks.getHomepage());
+            pane = new Pane(this);
+            setPage(Bookmarks.getHomepage());
             session = new Session(Bookmarks.getHomepage());
         }
         catch (IOException ioe) {
@@ -46,7 +47,7 @@ public class Browser extends JFrame {
         }
 
         //a toolbar and display pane are added and positioned.
-        add(pane, BorderLayout.CENTER);
+        add(new JScrollPane(pane), BorderLayout.CENTER);
         add(toolbar, BorderLayout.NORTH);
 
         setSize(size);
@@ -74,6 +75,18 @@ public class Browser extends JFrame {
     public Session getSession() {
         return session;
     }
+
+    /**
+     * Change the page displayed in the browser viewport.
+     *
+     * @param url   The url of the web page to be displayed.
+     */
+    public void setPage(String url) throws IOException {
+        // Sets the page
+        pane.setPage(url);
+        toolbar.updateAddressBar(url);
+    }
+
 
     public static void main(String[] args) {
         Browser window = new Browser(new Dimension(1000, 1000));

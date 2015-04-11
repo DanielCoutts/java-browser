@@ -63,7 +63,7 @@ public class Toolbar extends JPanel {
         home.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
-                    browser.getPane().setPage(Bookmarks.getHomepage());
+                    browser.setPage(Bookmarks.getHomepage());
                     browser.getSession().navigate(Bookmarks.getHomepage());
                 }
                 catch (IOException ioe) {
@@ -86,7 +86,7 @@ public class Toolbar extends JPanel {
                     String url = addressBar.getText();
                     try {
                         // The display pane displays the url in the address bar
-                        browser.getPane().setPage(url);
+                        browser.setPage(url);
 
                         browser.getSession().navigate(url);
                     } catch (IOException ioe) {
@@ -103,7 +103,7 @@ public class Toolbar extends JPanel {
                 try {
                     browser.getSession().backward();
                     String current = browser.getSession().getCurrent();
-                    browser.getPane().setPage(current);
+                    browser.setPage(current);
                 } catch (IOException ioe) {
                     // If the url is not valid, the user is notified with a popup.
                     JOptionPane.showMessageDialog(browser, "That is not a valid web address.");
@@ -117,7 +117,7 @@ public class Toolbar extends JPanel {
                 try {
                     browser.getSession().forward();
                     String current = browser.getSession().getCurrent();
-                    browser.getPane().setPage(current);
+                    browser.setPage(current);
                 }
                 catch (IOException ioe) {
                     // If the url is not valid, the user is notified with a popup.
