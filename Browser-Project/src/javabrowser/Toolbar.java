@@ -1,10 +1,12 @@
+package javabrowser;
 /**
  * @author Daniel Coutts
  */
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import javax.swing.*;
 
 
@@ -48,10 +50,10 @@ public class Toolbar extends JPanel {
      * Method to set the address bar text. Useful for updating the address
      * bar when clicking on hyperlinks.
      *
-     * @param text String to set the addressBar text to.
+     * @param url String to set the addressBar text to.
      */
-    public void updateAddressBar(String text) {
-        addressBar.setText(text);
+    public void updateAddressBar(URL url) {
+        addressBar.setText(url.toString());
     }
 
     /**
@@ -66,7 +68,7 @@ public class Toolbar extends JPanel {
                     browser.setPage(Bookmarks.getHomepage());
                     browser.getSession().navigate(Bookmarks.getHomepage());
                 }
-                catch (IOException ioe) {
+                catch (MalformedURLException mue) {
                     // If the url is not valid, the user is notified with a popup.
                     JOptionPane.showMessageDialog(browser, "That is not a valid web address.");
                 }
@@ -82,16 +84,28 @@ public class Toolbar extends JPanel {
 
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == 10) {
-                    // The current url in the address bar is placed into a variable.
-                    String url = addressBar.getText();
                     try {
+                        URL url;
+
+                        // This block attempts to work out if the user input can be read as a valid url.
+                        try {
+                            // The current url in the address bar is placed into a variable.
+                            url = new URL(addressBar.getText());
+                        } catch (MalformedURLException mue) {
+                            // Try adding http:// to the start of the url.
+                            url = new URL("http://" + addressBar.getText());
+                        }
+
                         // The display pane displays the url in the address bar
                         browser.setPage(url);
-
+                        // The address bar is updated with the full page url.
+                        updateAddressBar(url);
+                        // Add this url to the session history at the current position.
                         browser.getSession().navigate(url);
-                    } catch (IOException ioe) {
+                    }
+                    catch (MalformedURLException mue) {
                         // If the url is not valid, the user is notified with a popup.
-                        JOptionPane.showMessageDialog(browser, "That is not a valid web address.");
+                        JOptionPane.showMessageDialog(browser , "That is not a valid web address.");
                     }
                 }
             }
@@ -102,9 +116,9 @@ public class Toolbar extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     browser.getSession().backward();
-                    String current = browser.getSession().getCurrent();
+                    URL current = browser.getSession().getCurrent();
                     browser.setPage(current);
-                } catch (IOException ioe) {
+                } catch (MalformedURLException mue) {
                     // If the url is not valid, the user is notified with a popup.
                     JOptionPane.showMessageDialog(browser, "That is not a valid web address.");
                 }
@@ -116,10 +130,10 @@ public class Toolbar extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     browser.getSession().forward();
-                    String current = browser.getSession().getCurrent();
+                    URL current = browser.getSession().getCurrent();
                     browser.setPage(current);
                 }
-                catch (IOException ioe) {
+                catch (MalformedURLException mue) {
                     // If the url is not valid, the user is notified with a popup.
                     JOptionPane.showMessageDialog(browser, "That is not a valid web address.");
                 }

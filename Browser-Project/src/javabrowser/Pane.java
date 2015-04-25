@@ -1,9 +1,10 @@
+package javabrowser;
 /**
  * @author  Daniel Coutts
  */
 
-import java.awt.*;
-import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import javax.swing.*;
 import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
@@ -42,13 +43,13 @@ public class Pane extends JEditorPane {
     public void reload() {
         try {
             // Store the current page in a variable.
-            String page = getPage().toString();
+            URL page = getPage();
 
             // Refresh the page.
             getDocument().putProperty(Document.StreamDescriptionProperty, null);
             browser.setPage(page);
         }
-        catch (IOException ioe) {
+        catch (MalformedURLException mue) {
             // If the url is not valid, the user is notified with a popup.
             JOptionPane.showMessageDialog(browser, "That is not a valid web address.");
         }
@@ -63,10 +64,10 @@ public class Pane extends JEditorPane {
                 // If a hyperlink is clicked, navigate to that page.
                 if (event.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
                     try {
-                        browser.setPage(event.getURL().toString());
-                        browser.getSession().navigate(event.getURL().toString());
+                        browser.setPage(event.getURL());
+                        browser.getSession().navigate(event.getURL());
                     }
-                    catch (IOException ioe) {
+                    catch (MalformedURLException mue) {
                         // If the url is not valid, the user is notified with a popup.
                         JOptionPane.showMessageDialog(browser, "That is not a valid web address.");
                     }

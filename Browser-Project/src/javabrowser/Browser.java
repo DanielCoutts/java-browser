@@ -1,3 +1,4 @@
+package javabrowser;
 /**
  * @author  Daniel Coutts
  */
@@ -5,6 +6,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class Browser extends JFrame {
 
@@ -41,7 +44,7 @@ public class Browser extends JFrame {
             setPage(Bookmarks.getHomepage());
             session = new Session(Bookmarks.getHomepage());
         }
-        catch (IOException ioe) {
+        catch (MalformedURLException mue) {
             // If the url is not valid, the user is notified with a popup.
             JOptionPane.showMessageDialog(this, "That is not a valid web address.");
         }
@@ -81,10 +84,16 @@ public class Browser extends JFrame {
      *
      * @param url   The url of the web page to be displayed.
      */
-    public void setPage(String url) throws IOException {
+    public void setPage(URL url) throws MalformedURLException {
         // Sets the page
-        pane.setPage(url);
-        toolbar.updateAddressBar(url);
+        try {
+            pane.setPage(url);
+            toolbar.updateAddressBar(url);
+        }
+        catch (IOException ioe) {
+            // If the url is not valid, the user is notified with a popup.
+            JOptionPane.showMessageDialog(this , "That is not a valid web address.");
+        }
     }
 
 

@@ -1,8 +1,10 @@
+package javabrowser;
 /**
  * @author Daniel Coutts
  * 04/04/2015.
  */
 
+import java.net.URL;
 import java.util.Stack;
 
 public class Session {
@@ -10,31 +12,27 @@ public class Session {
     /**
      * Stack to store the session history before the current page.
      */
-    private Stack<String> previous;
+    private Stack<URL> previous;
 
     /**
      * Stack to store the session history after the current page.
      */
-    private Stack<String> next;
+    private Stack<URL> next;
 
     /**
      * The current page.
      */
-    private String current;
-
-    /**
-     * The associated Browser object.
-     */
+    private URL current;
 
     /**
      * Creates a Session object to track the pages or the current Pane
      *
      * @param current   The current page at initialisation (should be the homepage).
      */
-    public Session(/*Browser browser, */String current) {
+    public Session(URL current) {
         this.current = current;
-        previous = new Stack<String>();
-        next = new Stack<String>();
+        previous = new Stack<URL>();
+        next = new Stack<URL>();
     }
 
     /**
@@ -62,7 +60,7 @@ public class Session {
      *
      * @param url   the new page to add to the session history.
      */
-    public void navigate(String url) {
+    public void navigate(URL url) {
         // Add the current page to the session history.
         previous.push(current);
         current = url;
@@ -74,7 +72,7 @@ public class Session {
     /**
      * @return  The current page.
      */
-    public String getCurrent() {
+    public URL getCurrent() {
         return current;
     }
 
@@ -82,7 +80,7 @@ public class Session {
      * Private method that empties the 'next' stack.
      */
     private void clearNext() {
-        next = new Stack<String>();
+        next = new Stack<URL>();
     }
 
 }
