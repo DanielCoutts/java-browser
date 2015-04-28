@@ -36,25 +36,22 @@ public class Browser extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
 
-        try {
-            // The browser object is passes to the Toolbar and Pane objects.
-            // This allows the toolbar to access the display pane and vice versa.
-            toolbar = new Toolbar(this);
-            pane = new Pane(this);
-            setPage(Bookmarks.getHomepage());
-            session = new Session(Bookmarks.getHomepage());
-        }
-        catch (MalformedURLException mue) {
-            // If the url is not valid, the user is notified with a popup.
-            JOptionPane.showMessageDialog(this, "That is not a valid web address.");
-        }
+        // The browser object is passes to the Toolbar, Pane, and Session objects.
+        // This allows them to communicate through this class.
+        toolbar = new Toolbar(this);
+        pane = new Pane(this);
+        session = new Session(this);
 
-        //a toolbar and display pane are added and positioned.
+        // Initially navigate to the homepage
+        session.navigate(Bookmarks.getHomepage());
+
+        // A toolbar and display pane are added and positioned.
         add(new JScrollPane(pane), BorderLayout.CENTER);
         add(toolbar, BorderLayout.NORTH);
 
+        // Set the default and minimum dimensions.
         setSize(size);
-        setMinimumSize(new Dimension(800, 400));
+        setMinimumSize(new Dimension(1000, 400));
         setVisible(true);
     }
 
@@ -84,18 +81,40 @@ public class Browser extends JFrame {
      *
      * @param url   The url of the web page to be displayed.
      */
-    public void setPage(URL url) throws MalformedURLException {
+    public void setPage(URL url) {
         // Sets the page
         try {
+            // Set the pane to display the specified URL.
             pane.setPage(url);
-            toolbar.updateAddressBar(url);
+
+            // Set the address bar to show the specified URL.
+            toolbar.getAddressBar().setText(url.toString());
         }
+        // The setPage method throws an IO exception. This needs to be caught but shouldn't
+        // be a problem under normal usage.
         catch (IOException ioe) {
             // If the url is not valid, the user is notified with a popup.
             JOptionPane.showMessageDialog(this , "That is not a valid web address.");
         }
     }
 
+    /**
+     * Create a url. Add http:// if it is missing.
+     *
+     * @param string  the string to attempt to convert into a url.
+     * @return  the completed url object (or null if invalid).
+     */
+    public static URL makeUrl(String string) {
+        if(!string.startsWith("http://")) {
+            string = "http://" + string;
+        }
+        try {
+            return new URL(string);
+        } catch (MalformedURLException e) {
+            JOptionPane.showMessageDialog(null, "That is not a valid URL.");
+            return null;
+        }
+    }
 
     public static void main(String[] args) {
         Browser window = new Browser(new Dimension(1000, 1000));

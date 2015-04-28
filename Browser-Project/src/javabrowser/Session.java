@@ -1,13 +1,17 @@
 package javabrowser;
 /**
  * @author Daniel Coutts
- * 04/04/2015.
  */
 
 import java.net.URL;
 import java.util.Stack;
 
 public class Session {
+
+    /**
+     * Reference to the Session object's containing Browser object.
+     */
+    Browser browser;
 
     /**
      * Stack to store the session history before the current page.
@@ -27,10 +31,11 @@ public class Session {
     /**
      * Creates a Session object to track the pages or the current Pane
      *
-     * @param current   The current page at initialisation (should be the homepage).
+     * @param browser   The Browser object associated with this Pane object.
      */
-    public Session(URL current) {
-        this.current = current;
+    public Session(Browser browser) {
+        this.browser = browser;
+
         previous = new Stack<URL>();
         next = new Stack<URL>();
     }
@@ -42,6 +47,7 @@ public class Session {
         if(!next.isEmpty()) {
             previous.push(current);
             current = next.pop();
+            browser.setPage(current);
         }
     }
 
@@ -52,21 +58,29 @@ public class Session {
         if(!previous.isEmpty()) {
             next.push(current);
             current = previous.pop();
+            browser.setPage(current);
         }
     }
 
     /**
      * Navigate to a new page from the current position in the session history
      *
-     * @param url   the new page to add to the session history.
+     * @param url   the new page to navigate to and add to the session history.
      */
     public void navigate(URL url) {
-        // Add the current page to the session history.
-        previous.push(current);
+        if (current != null) {
+            // Add the current page to the session history.
+            previous.push(current);
+
+            // Empty the 'next' stack.
+            clearNext();
+        }
+
+        // Set 'current' to the specified url.
         current = url;
 
-        // Empty the 'next' stack.
-        clearNext();
+        // Display the webpage.
+        browser.setPage(current);
     }
 
     /**
