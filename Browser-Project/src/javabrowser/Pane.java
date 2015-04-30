@@ -1,6 +1,6 @@
 package javabrowser;
 /**
- * @author  Daniel Coutts
+ * @author Daniel Coutts
  */
 
 import java.net.URL;

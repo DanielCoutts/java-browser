@@ -31,7 +31,7 @@ public class Session {
     /**
      * Creates a Session object to track the pages or the current Pane
      *
-     * @param browser   The Browser object associated with this Pane object.
+     * @param browser The Browser object associated with this Pane object.
      */
     public Session(Browser browser) {
         this.browser = browser;
@@ -44,7 +44,7 @@ public class Session {
      * Move forward in the session history.
      */
     public void forward() {
-        if(!next.isEmpty()) {
+        if (!next.isEmpty()) {
             previous.push(current);
             current = next.pop();
             browser.setPage(current);
@@ -55,7 +55,7 @@ public class Session {
      * Move backwards in the session history.
      */
     public void backward() {
-        if(!previous.isEmpty()) {
+        if (!previous.isEmpty()) {
             next.push(current);
             current = previous.pop();
             browser.setPage(current);
@@ -65,7 +65,7 @@ public class Session {
     /**
      * Navigate to a new page from the current position in the session history
      *
-     * @param url   the new page to navigate to and add to the session history.
+     * @param url the new page to navigate to and add to the session history.
      */
     public void navigate(URL url) {
         if (current != null) {
@@ -84,7 +84,7 @@ public class Session {
     }
 
     /**
-     * @return  The current page.
+     * @return The current page.
      */
     public URL getCurrent() {
         return current;

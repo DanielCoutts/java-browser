@@ -1,6 +1,6 @@
 package javabrowser;
 /**
- * @author  Daniel Coutts
+ * @author Daniel Coutts
  */
 
 import javax.swing.*;
@@ -56,21 +56,21 @@ public class Browser extends JFrame {
     }
 
     /**
-     * @return  The associated Toolbar object.
+     * @return The associated Toolbar object.
      */
     public Toolbar getToolbar() {
         return toolbar;
     }
 
     /**
-     * @return  The associated Pane object.
+     * @return The associated Pane object.
      */
     public Pane getPane() {
         return pane;
     }
 
     /**
-     * @return  The associated Session object.
+     * @return The associated Session object.
      */
     public Session getSession() {
         return session;
@@ -94,7 +94,7 @@ public class Browser extends JFrame {
         // be a problem under normal usage.
         catch (IOException ioe) {
             // If the url is not valid, the user is notified with a popup.
-            JOptionPane.showMessageDialog(this , "That is not a valid web address.");
+            JOptionPane.showMessageDialog(this, "That is not a valid web address.");
         }
     }
 
@@ -102,10 +102,10 @@ public class Browser extends JFrame {
      * Create a url. Add http:// if it is missing.
      *
      * @param string  the string to attempt to convert into a url.
-     * @return  the completed url object (or null if invalid).
+     * @return the completed url object (or null if invalid).
      */
     public static URL makeUrl(String string) {
-        if(!string.startsWith("http://")) {
+        if (!string.startsWith("http://")) {
             string = "http://" + string;
         }
         try {

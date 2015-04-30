@@ -1,6 +1,6 @@
 package javabrowser;
 /**
- * @author  Daniel Coutts
+ * @author Daniel Coutts
  */
 
 import javax.swing.*;
@@ -8,12 +8,12 @@ import java.io.*;
 import java.net.URL;
 import java.util.*;
 
-public class Bookmarks {
+public class Bookmarks /*extends UrlMenu*/ {
 
     /**
      * Retrieves the homepage from the homepage.cfg file and returns it.
      *
-     * @return  the browser's homepage (or null if the file cannot be found/created).
+     * @return the browser's homepage (or null if the file cannot be found/created).
      */
     public static URL getHomepage() {
         try {
@@ -27,7 +27,7 @@ public class Bookmarks {
                 url = Browser.makeUrl(source.nextLine());
 
                 // If the url conversion was successful, return the url.
-                if(url != null) {
+                if (url != null) {
                     return url;
                 }
             }
@@ -37,9 +37,8 @@ public class Bookmarks {
             // a homepage and try again.
             setHomepage();
             return getHomepage();
-        }
-        catch (FileNotFoundException fnfe) {
-            JOptionPane.showMessageDialog(null , "A config file is missing and cannot be created.");
+        } catch (FileNotFoundException fnfe) {
+//            missingFile();
             return null;
         }
     }
@@ -55,9 +54,8 @@ public class Bookmarks {
             PrintWriter home = new PrintWriter("homepage.cfg");
             home.println(url);
             home.close();
-        }
-        catch (FileNotFoundException fnfe) {
-            JOptionPane.showMessageDialog(null , "A config file is missing and cannot be created.");
+        } catch (FileNotFoundException fnfe) {
+            JOptionPane.showMessageDialog(null, "A config file is missing and cannot be created.");
         }
     }
 
@@ -68,7 +66,7 @@ public class Bookmarks {
         URL url = null;
 
         // ask the user for a url until a valid one is given.
-        while(url == null) {
+        while (url == null) {
             String homeUrl = JOptionPane.showInputDialog("Please set a homepage:");
             url = Browser.makeUrl(homeUrl);
         }

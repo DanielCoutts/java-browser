@@ -25,7 +25,11 @@ public class Toolbar extends JPanel {
     JButton bookmarks = new JButton("Bookmarks");
     JButton history = new JButton("History");
 
-    // Constructor that adds button and and address bar.
+    /**
+     * Create a Toolbar object and add browser controls.
+     *
+     * @param browser The Browser object associated with this Pane object.
+     */
     public Toolbar(Browser browser) {
         super();
         this.browser = browser;
@@ -92,6 +96,15 @@ public class Toolbar extends JPanel {
         reload.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 browser.getPane().reload();
+            }
+        });
+UrlMenu thing = new UrlMenu(browser);
+        bookmarks.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                thing.setVisible(true);
+                thing.addListItem("fucking", Browser.makeUrl(addressBar.getText()));
+                thing.addListItem("shitting", Browser.makeUrl(addressBar.getText()));
+                thing.addListItem("balls", Browser.makeUrl(addressBar.getText()));
             }
         });
     }
