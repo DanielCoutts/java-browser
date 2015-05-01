@@ -22,7 +22,7 @@ public class History extends UrlMenu {
     /**
      * Add a URL to the history.
      *
-     * @param url   The associated url.
+     * @param url The associated url.
      */
     public void addHistoryItem(URL url) {
         Date now = new Date(System.currentTimeMillis());

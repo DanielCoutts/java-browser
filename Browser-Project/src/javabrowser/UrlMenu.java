@@ -91,7 +91,7 @@ public class UrlMenu extends JFrame {
     /**
      * Saves the data to file.
      *
-     * @param file The file to load from.
+     * @param file The file to save to.
      */
     public void save(String file) {
         try {

@@ -106,10 +106,16 @@ public class Browser extends JFrame {
         return session;
     }
 
+    /**
+     * @return The associated Bookmarks object.
+     */
     public Bookmarks getBookmarks() {
         return bookmarks;
     }
 
+    /**
+     * @return The associated History object.
+     */
     public History getHistory() {
         return history;
     }
