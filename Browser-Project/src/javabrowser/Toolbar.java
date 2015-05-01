@@ -21,8 +21,10 @@ public class Toolbar extends JPanel {
     JButton home = new JButton("Home");
     JButton reload = new JButton("Reload");
 
+    JButton addBM = new JButton("Bookmark This");
     JButton bookmarks = new JButton("Bookmarks");
     JButton history = new JButton("History");
+
 
     /**
      * Create a Toolbar object and add browser controls.
@@ -38,6 +40,7 @@ public class Toolbar extends JPanel {
         add(home);
         add(reload);
         add(addressBar);
+        add(addBM);
         add(bookmarks);
         add(history);
 
@@ -99,12 +102,17 @@ public class Toolbar extends JPanel {
         });
         bookmarks.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                browser.getBookmarks().setVisible(true);
             }
         });
         history.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 browser.getHistory().setVisible(true);
+            }
+        });
+        addBM.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                browser.getBookmarks().addListItem(browser.getSession().getCurrent());
             }
         });
     }

@@ -46,7 +46,7 @@ public class Homepage {
     /**
      * Sets the browser homepage.
      *
-     * @param url   url to set the homepage to.
+     * @param url url to set the homepage to.
      */
     public static void setHomepage(URL url) {
         try {

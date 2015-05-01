@@ -44,6 +44,11 @@ public class UrlMenu extends JFrame implements Serializable {
     private JButton remove;
     private JButton removeAll;
 
+    /**
+     * Creates a menu of URLs with buttons for navigating to and removing items.
+     *
+     * @param browser the associated Browser object.
+     */
     public UrlMenu(Browser browser) {
         super();
 
@@ -65,7 +70,7 @@ public class UrlMenu extends JFrame implements Serializable {
         add(buttons, BorderLayout.NORTH);
         add(new JScrollPane(list), BorderLayout.CENTER);
 
-        setMinimumSize(new Dimension(300, 400));
+        setMinimumSize(new Dimension(600, 400));
 
         goTo = new JButton("Go to");
         remove = new JButton("Remove");

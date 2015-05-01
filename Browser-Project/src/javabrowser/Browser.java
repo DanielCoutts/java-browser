@@ -44,7 +44,7 @@ public class Browser extends JFrame {
     /**
      * Sets up the browser correctly and initialises objects.
      *
-     * @param size  The default dimensions of the window.
+     * @param size The default dimensions of the window.
      */
     public Browser(Dimension size) {
         super();
@@ -72,7 +72,7 @@ public class Browser extends JFrame {
 
         // Set the default and minimum dimensions.
         setSize(size);
-        setMinimumSize(new Dimension(1000, 400));
+        setMinimumSize(new Dimension(1100, 400));
 
         addListeners();
 
@@ -111,7 +111,7 @@ public class Browser extends JFrame {
     /**
      * Change the page displayed in the browser viewport.
      *
-     * @param url   The url of the web page to be displayed.
+     * @param url The url of the web page to be displayed.
      */
     public void setPage(URL url) {
         // Sets the page
@@ -133,7 +133,7 @@ public class Browser extends JFrame {
     /**
      * Create a url. Add http:// if it is missing.
      *
-     * @param string  the string to attempt to convert into a url.
+     * @param string the string to attempt to convert into a url.
      * @return the completed url object (or null if invalid).
      */
     public static URL makeUrl(String string) {
