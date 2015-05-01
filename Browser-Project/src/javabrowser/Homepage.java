@@ -38,7 +38,7 @@ public class Homepage {
             setHomepage();
             return getHomepage();
         } catch (FileNotFoundException fnfe) {
-//            missingFile();
+            JOptionPane.showMessageDialog(null, "A config file is missing and cannot be created.");
             return null;
         }
     }

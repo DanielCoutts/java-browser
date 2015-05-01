@@ -152,14 +152,14 @@ public class Browser extends JFrame {
      * Saves the Bookmarks object to file.
      *
      * @param file The file to write the object to.
-     * @throws IOException when the file cannot be written.
      */
     public void saveBookmarks(String file) {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
             out.writeObject(bookmarks);
+            out.close();
         } catch (IOException e1) {
-            JOptionPane.showMessageDialog(null, "Your bookmarks could not be saved.");
+            JOptionPane.showMessageDialog(this, "Your bookmarks could not be saved.");
         }
     }
 
@@ -167,14 +167,14 @@ public class Browser extends JFrame {
      * Saves the History object to file.
      *
      * @param file The file to write the object to.
-     * @throws IOException when the file cannot be written.
      */
     public void saveHistory(String file) {
         try {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
             out.writeObject(history);
+            out.close();
         } catch (IOException e1) {
-            JOptionPane.showMessageDialog(null, "Your history could not be saved.");
+            JOptionPane.showMessageDialog(this, "Your history could not be saved.");
         }
     }
 
@@ -188,11 +188,11 @@ public class Browser extends JFrame {
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
             bookmarks = (Bookmarks) in.readObject();
+            in.close();
         }
         // No catch bodies are required, as a notification is not needed when there
         // are no previous bookmarks.
-        catch (IOException e) {
-        } catch (ClassNotFoundException e) {
+        catch (IOException | ClassNotFoundException e) {
         }
     }
 
@@ -206,11 +206,11 @@ public class Browser extends JFrame {
         try {
             ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
             history = (History) in.readObject();
+            in.close();
         }
         // No catch bodies are required, as a notification is not needed when there
         // is no previous history.
-        catch (IOException e) {
-        } catch (ClassNotFoundException e) {
+        catch (IOException | ClassNotFoundException e) {
         }
     }
 
@@ -230,6 +230,6 @@ public class Browser extends JFrame {
      * A main method that creates a browser object.
      */
     public static void main(String[] args) {
-        Browser window = new Browser(new Dimension(1000, 1000));
+        new Browser(new Dimension(1000, 1000));
     }
 }
