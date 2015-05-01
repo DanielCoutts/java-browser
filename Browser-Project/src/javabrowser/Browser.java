@@ -1,33 +1,48 @@
 package javabrowser;
-/**
- * @author Daniel Coutts
- */
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * @author Daniel Coutts
+ */
 public class Browser extends JFrame {
 
+    private static final String BOOKMARKS_FILEPATH = "bookmarks.ser";
+    private static final String HISTORY_FILEPATH = "history.ser";
+
     /**
-     * A reference to the Browser's associated Toolbar.
+     * A reference to the Browser's associated Toolbar class.
      */
     private Toolbar toolbar;
 
     /**
-     * A reference to the Browser's associated Pane.
+     * A reference to the Browser's associated Pane class.
      */
     private Pane pane;
 
     /**
-     * Session object.
+     * A reference to the Browser's associated Session class.
      */
     private Session session;
 
     /**
-     * A constructor that sets up the browser correctly.
+     * A reference to the Browser's associated Bookmarks class.
+     */
+    private Bookmarks bookmarks;
+
+    /**
+     * A reference to the Browser's associated History class.
+     */
+    private History history;
+
+    /**
+     * Sets up the browser correctly and initialises objects.
      *
      * @param size  The default dimensions of the window.
      */
@@ -36,14 +51,20 @@ public class Browser extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
 
-        // The browser object is passes to the Toolbar, Pane, and Session objects.
+        // The browser object is passed to these objects.
         // This allows them to communicate through this class.
+        bookmarks = new Bookmarks(this);
+        history = new History(this);
         toolbar = new Toolbar(this);
         pane = new Pane(this);
         session = new Session(this);
 
+        // Attempt to load history and bookmarks data from files
+        loadBookmarks(BOOKMARKS_FILEPATH);
+        loadHistory(HISTORY_FILEPATH);
+
         // Initially navigate to the homepage
-        session.navigate(Bookmarks.getHomepage());
+        session.navigate(Homepage.getHomepage());
 
         // A toolbar and display pane are added and positioned.
         add(new JScrollPane(pane), BorderLayout.CENTER);
@@ -52,6 +73,9 @@ public class Browser extends JFrame {
         // Set the default and minimum dimensions.
         setSize(size);
         setMinimumSize(new Dimension(1000, 400));
+
+        addListeners();
+
         setVisible(true);
     }
 
@@ -74,6 +98,14 @@ public class Browser extends JFrame {
      */
     public Session getSession() {
         return session;
+    }
+
+    public Bookmarks getBookmarks() {
+        return bookmarks;
+    }
+
+    public History getHistory() {
+        return history;
     }
 
     /**
@@ -116,6 +148,87 @@ public class Browser extends JFrame {
         }
     }
 
+    /**
+     * Saves the Bookmarks object to file.
+     *
+     * @param file The file to write the object to.
+     * @throws IOException when the file cannot be written.
+     */
+    public void saveBookmarks(String file) {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+            out.writeObject(bookmarks);
+        } catch (IOException e1) {
+            JOptionPane.showMessageDialog(null, "Your bookmarks could not be saved.");
+        }
+    }
+
+    /**
+     * Saves the History object to file.
+     *
+     * @param file The file to write the object to.
+     * @throws IOException when the file cannot be written.
+     */
+    public void saveHistory(String file) {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
+            out.writeObject(history);
+        } catch (IOException e1) {
+            JOptionPane.showMessageDialog(null, "Your history could not be saved.");
+        }
+    }
+
+    /**
+     * Loads the Bookmarks object from file.
+     *
+     * @param file The file to load from.
+     */
+    public void loadBookmarks(String file) {
+
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+            bookmarks = (Bookmarks) in.readObject();
+        }
+        // No catch bodies are required, as a notification is not needed when there
+        // are no previous bookmarks.
+        catch (IOException e) {
+        } catch (ClassNotFoundException e) {
+        }
+    }
+
+    /**
+     * Loads the History object from file.
+     *
+     * @param file The file to load from.
+     */
+    public void loadHistory(String file) {
+
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
+            history = (History) in.readObject();
+        }
+        // No catch bodies are required, as a notification is not needed when there
+        // is no previous history.
+        catch (IOException e) {
+        } catch (ClassNotFoundException e) {
+        }
+    }
+
+    /**
+     * Private method used to add listeners. It is called in the constructor.
+     */
+    private void addListeners() {
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                saveBookmarks(BOOKMARKS_FILEPATH);
+                saveHistory(HISTORY_FILEPATH);
+            }
+        });
+    }
+
+    /**
+     * A main method that creates a browser object.
+     */
     public static void main(String[] args) {
         Browser window = new Browser(new Dimension(1000, 1000));
     }

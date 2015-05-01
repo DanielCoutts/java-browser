@@ -1,7 +1,4 @@
 package javabrowser;
-/**
- * @author Daniel Coutts
- */
 
 import java.net.URL;
 import javax.swing.*;
@@ -9,6 +6,9 @@ import javax.swing.event.HyperlinkEvent;
 import javax.swing.event.HyperlinkListener;
 import javax.swing.text.Document;
 
+/**
+ * @author Daniel Coutts
+ */
 public class Pane extends JEditorPane {
 
     /**

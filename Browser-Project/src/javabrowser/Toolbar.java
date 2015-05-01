@@ -1,14 +1,13 @@
 package javabrowser;
-/**
- * @author Daniel Coutts
- */
 
 import java.awt.*;
 import java.awt.event.*;
 import java.net.URL;
 import javax.swing.*;
 
-
+/**
+ * @author Daniel Coutts
+ */
 public class Toolbar extends JPanel {
 
     /**
@@ -61,8 +60,8 @@ public class Toolbar extends JPanel {
         // Home button action listener
         home.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                browser.setPage(Bookmarks.getHomepage());
-                browser.getSession().navigate(Bookmarks.getHomepage());
+                browser.setPage(Homepage.getHomepage());
+                browser.getSession().navigate(Homepage.getHomepage());
             }
         });
 
@@ -98,13 +97,14 @@ public class Toolbar extends JPanel {
                 browser.getPane().reload();
             }
         });
-UrlMenu thing = new UrlMenu(browser);
         bookmarks.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                thing.setVisible(true);
-                thing.addListItem("fucking", Browser.makeUrl(addressBar.getText()));
-                thing.addListItem("shitting", Browser.makeUrl(addressBar.getText()));
-                thing.addListItem("balls", Browser.makeUrl(addressBar.getText()));
+
+            }
+        });
+        history.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                browser.getHistory().setVisible(true);
             }
         });
     }

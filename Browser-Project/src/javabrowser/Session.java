@@ -1,11 +1,11 @@
 package javabrowser;
-/**
- * @author Daniel Coutts
- */
 
 import java.net.URL;
 import java.util.Stack;
 
+/**
+ * @author Daniel Coutts
+ */
 public class Session {
 
     /**
@@ -81,6 +81,8 @@ public class Session {
 
         // Display the webpage.
         browser.setPage(current);
+
+        browser.getHistory().addListItem(current.toString(), current);
     }
 
     /**
