@@ -64,7 +64,7 @@ public class Browser extends JFrame {
         loadHistory(HISTORY_FILEPATH);
 
         // Initially navigate to the homepage
-        session.navigate(Homepag.getHomepage());
+        session.navigate(Homepage.getHomepage());
 
         // A toolbar and display pane are added and positioned.
         add(new JScrollPane(pane), BorderLayout.CENTER);

@@ -63,8 +63,8 @@ public class Toolbar extends JPanel {
         // Home button action listener
         home.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                browser.setPage(Homepag.getHomepage());
-                browser.getSession().navigate(Homepag.getHomepage());
+                browser.setPage(Homepage.getHomepage());
+                browser.getSession().navigate(Homepage.getHomepage());
             }
         });
 

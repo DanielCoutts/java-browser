@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * @author Daniel Coutts
  */
-public class Homepag {
+public class Homepage {
 
     /**
      * Retrieves the homepage from the homepage.cfg file and returns it.
