@@ -13,9 +13,9 @@ public class Bookmarks extends UrlMenu {
         setTitle("Bookmarks");
     }
 
-    public void addListItem(URL url) {
+    public void addBookmark(URL url) {
         String title = JOptionPane.showInputDialog("Please name this bookmark");
         title += " - " + url.toString();
-        super.addListItem(title, url);
+        addListItem(title, url);
     }
 }

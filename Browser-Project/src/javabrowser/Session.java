@@ -82,7 +82,7 @@ public class Session {
         // Display the webpage.
         browser.setPage(current);
 
-        browser.getHistory().addListItem(current.toString(), current);
+        browser.getHistory().addHistoryItem(current);
     }
 
     /**

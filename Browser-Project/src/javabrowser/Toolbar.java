@@ -24,6 +24,7 @@ public class Toolbar extends JPanel {
     JButton addBM = new JButton("Bookmark This");
     JButton bookmarks = new JButton("Bookmarks");
     JButton history = new JButton("History");
+    JButton setHome = new JButton("Set Home");
 
 
     /**
@@ -41,6 +42,7 @@ public class Toolbar extends JPanel {
         add(reload);
         add(addressBar);
         add(addBM);
+        add(setHome);
         add(bookmarks);
         add(history);
 
@@ -112,7 +114,14 @@ public class Toolbar extends JPanel {
         });
         addBM.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                browser.getBookmarks().addListItem(browser.getSession().getCurrent());
+                browser.getBookmarks().addBookmark(browser.getSession().getCurrent());
+            }
+        });
+        setHome.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String homeUrl = JOptionPane.showInputDialog("Set a new Homepage:");
+                URL url = Browser.makeUrl(homeUrl);
+                Homepage.setHomepage(url);
             }
         });
     }

@@ -22,12 +22,11 @@ public class History extends UrlMenu {
     /**
      * Add a URL to the history.
      *
-     * @param title The title of the list item.
      * @param url   The associated url.
      */
-    public void addListItem(String title, URL url) {
+    public void addHistoryItem(URL url) {
         Date now = new Date(System.currentTimeMillis());
-        title = now.toString() + " - " + title;
-        super.addListItem(title, url);
+        String title = now.toString() + " - " + url.toString();
+        addListItem(title, url);
     }
 }

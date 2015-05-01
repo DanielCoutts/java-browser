@@ -13,8 +13,15 @@ import java.net.URL;
  */
 public class Browser extends JFrame {
 
-    private static final String BOOKMARKS_FILEPATH = "bookmarks.ser";
-    private static final String HISTORY_FILEPATH = "history.ser";
+    /**
+     * String constant for filename.
+     */
+    private static final String BOOKMARKS_FILEPATH = "bookmarks.cfg";
+
+    /**
+     * String constant for filename.
+     */
+    private static final String HISTORY_FILEPATH = "history.cfg";
 
     /**
      * A reference to the Browser's associated Toolbar class.
@@ -48,7 +55,6 @@ public class Browser extends JFrame {
      */
     public Browser(Dimension size) {
         super();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout());
 
         // The browser object is passed to these objects.
@@ -60,8 +66,8 @@ public class Browser extends JFrame {
         session = new Session(this);
 
         // Attempt to load history and bookmarks data from files
-        loadBookmarks(BOOKMARKS_FILEPATH);
-        loadHistory(HISTORY_FILEPATH);
+        bookmarks.load(BOOKMARKS_FILEPATH);
+        history.load(HISTORY_FILEPATH);
 
         // Initially navigate to the homepage
         session.navigate(Homepage.getHomepage());
@@ -72,7 +78,7 @@ public class Browser extends JFrame {
 
         // Set the default and minimum dimensions.
         setSize(size);
-        setMinimumSize(new Dimension(1100, 400));
+        setMinimumSize(new Dimension(1300, 400));
 
         addListeners();
 
@@ -149,79 +155,16 @@ public class Browser extends JFrame {
     }
 
     /**
-     * Saves the Bookmarks object to file.
-     *
-     * @param file The file to write the object to.
-     */
-    public void saveBookmarks(String file) {
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-            out.writeObject(bookmarks);
-            out.close();
-        } catch (IOException e1) {
-            JOptionPane.showMessageDialog(this, "Your bookmarks could not be saved.");
-        }
-    }
-
-    /**
-     * Saves the History object to file.
-     *
-     * @param file The file to write the object to.
-     */
-    public void saveHistory(String file) {
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file));
-            out.writeObject(history);
-            out.close();
-        } catch (IOException e1) {
-            JOptionPane.showMessageDialog(this, "Your history could not be saved.");
-        }
-    }
-
-    /**
-     * Loads the Bookmarks object from file.
-     *
-     * @param file The file to load from.
-     */
-    public void loadBookmarks(String file) {
-
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-            bookmarks = (Bookmarks) in.readObject();
-            in.close();
-        }
-        // No catch bodies are required, as a notification is not needed when there
-        // are no previous bookmarks.
-        catch (IOException | ClassNotFoundException e) {
-        }
-    }
-
-    /**
-     * Loads the History object from file.
-     *
-     * @param file The file to load from.
-     */
-    public void loadHistory(String file) {
-
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(file));
-            history = (History) in.readObject();
-            in.close();
-        }
-        // No catch bodies are required, as a notification is not needed when there
-        // is no previous history.
-        catch (IOException | ClassNotFoundException e) {
-        }
-    }
-
-    /**
      * Private method used to add listeners. It is called in the constructor.
      */
     private void addListeners() {
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                saveBookmarks(BOOKMARKS_FILEPATH);
-                saveHistory(HISTORY_FILEPATH);
+                bookmarks.save(BOOKMARKS_FILEPATH);
+                history.save(HISTORY_FILEPATH);
+                setVisible(false);
+                dispose();
+                System.exit(0);
             }
         });
     }
@@ -230,6 +173,6 @@ public class Browser extends JFrame {
      * A main method that creates a browser object.
      */
     public static void main(String[] args) {
-        new Browser(new Dimension(1000, 1000));
+        new Browser(new Dimension(1300, 800));
     }
 }

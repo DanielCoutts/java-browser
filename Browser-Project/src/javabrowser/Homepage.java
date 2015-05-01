@@ -11,6 +11,11 @@ import java.util.*;
 public class Homepage {
 
     /**
+     * String constant for filename.
+     */
+    private static final String HOMEPAGE_FILEPATH = "homepage.cfg";
+
+    /**
      * Retrieves the homepage from the homepage.cfg file and returns it.
      *
      * @return the browser's homepage (or null if the file cannot be found/created).
@@ -18,7 +23,7 @@ public class Homepage {
     public static URL getHomepage() {
         try {
             // creating a FileReader and putting it inside a scanner
-            FileReader home = new FileReader("homepage.cfg");
+            FileReader home = new FileReader(HOMEPAGE_FILEPATH);
             Scanner source = new Scanner(home);
 
             URL url;
@@ -51,7 +56,8 @@ public class Homepage {
     public static void setHomepage(URL url) {
         try {
             // Write whatever is passed to this method to the homepage config file.
-            PrintWriter home = new PrintWriter("homepage.cfg");
+            File file = new File(HOMEPAGE_FILEPATH);
+            PrintWriter home = new PrintWriter(file);
             home.println(url);
             home.close();
         } catch (FileNotFoundException fnfe) {
@@ -60,7 +66,7 @@ public class Homepage {
     }
 
     /**
-     * Asks the user to set the homepage using an input dialog.
+     * Asks the user to set the homepage using an input dialog if there is no homepage already.
      */
     public static void setHomepage() {
         URL url = null;
